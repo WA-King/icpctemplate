@@ -1,0 +1,123 @@
+set nu
+set autochdir
+set hidden
+syntax on
+set tabstop=4
+set encoding=utf-8
+set fileencodings=utf-8,chinese,latin-1
+if has("win32")  
+    set fileencoding=chinese  
+else   
+    set fileencoding=utf-8 
+endif
+
+"解决菜单乱码  
+source $VIMRUNTIME/delmenu.vim  
+source $VIMRUNTIME/menu.vim
+
+set shiftwidth=4
+set expandtab
+set smarttab
+set cindent
+set history=10000
+set noswapfile
+set nobackup
+set mouse =a
+set visualbell t_vb=  
+au GuiEnter * set t_vb= 
+set showcmd
+set showmode
+set autoindent
+set showmatch
+set cursorline
+set cursorcolumn
+set autowrite
+set scrolloff=5
+set backspace=2
+set ignorecase
+set incsearch
+set hlsearch
+set guifont=Consolas:h14:
+
+set pythonthreedll=python37.dll
+map nh :nohlsearch<CR>
+imap kj <esc>l
+nmap <c-a> ggVG"+y
+nmap <c-x> gg=G
+imap {<CR> {<CR>}<Esc>O
+imap {<s-cr> {<CR>
+map<F6> :call CR()<CR>
+func! CR()
+    exec "w"
+    if &filetype == 'cpp'
+        exec "!g++ % -std=c++11 -o %<.exe"
+        exec "! %<.exe "
+    elseif &filetype == 'python'
+        exec "!python %"
+    endif
+endfunc
+
+set background=dark
+colorscheme gruvbox
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-bufferline'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+"Plug 'honza/vim-snippets'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+call plug#end()
+
+"airline buffer
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+
+let mapleader = "\<space>"
+nmap <silent>tl :bn<cr>
+nmap <silent>th :bp<cr>
+nmap <silent>te :bdelete<CR>
+"bufferline
+let g:bufferline_rotate=1
+let g:bufferline_fixed_index=0
+let g:bufferline_echo = 0
+let g:bufferline_active_buffer_left = '['
+let g:bufferline_active_buffer_right = ']'
+
+"fzf
+nmap <C-p> :Files<CR>
+nmap <C-e> :Buffers<CR>
+
+"coc
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+"vim-visual-multi
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-k>'
+let g:VM_maps['Remove Region']      = 'q'
+let g:VM_maps['Skip Region']        = '<C-n>'
