@@ -15,6 +15,9 @@ int main() {
 #ifndef WA_DEBUG
     ios::sync_with_stdio(false);cin.tie(nullptr);
 #endif
+    int n;
+    cin>>n;
+    cout<<n<<'\n';
     return 0;
 }
 
