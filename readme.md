@@ -1,2 +1,2 @@
-垃圾的模板
-[CF](https://codeforces.com/profile/Imagine_I)
+
+[我的CF](https://codeforces.com/profile/Imagine_I)
